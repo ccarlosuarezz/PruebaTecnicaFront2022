@@ -1,38 +1,95 @@
-.App {
-  text-align: center;
+p {
+    margin: 0;
+    padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.gap-x-1 {
+    column-gap: 0.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+.gap-x-2 {
+    column-gap: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.gap-y-1 {
+    row-gap: 0.5rem;
+}
+
+.gap-y-2 {
+    row-gap: 1rem;
+}
+
+.button {
+    padding-inline: 0.5rem;
+    padding-block: 0.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.button > p, .icon {
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    color: white;
+}
+
+.icon-blue {
+    padding: 0;
+    margin: 0;
+    color: var(--blue-color);
+}
+
+.bg-blue {
+    background-color: var(--blue-color);
+}
+
+.bg-green {
+    background-color: var(--green-color);
+}
+
+.bg-yellow {
+    background-color: var(--yellow-color);
+}
+
+.bg-red {
+    background-color: var(--red-color);
+}
+
+.padding-1 {
+    padding: 1rem;
+}
+
+.padding-2 {
+    padding: 2rem;
+}
+
+.bg-blue:hover {
+    background-color: var(--blue-dark-color);
+}
+
+.bg-green:hover {
+    background-color: var(--green-dark-color);
+}
+
+.bg-yellow:hover {
+    background-color: var(--yellow-dark-color);
+}
+
+.bg-red:hover {
+    background-color: var(--red-dark-color);
 }
