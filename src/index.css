@@ -121,3 +121,8 @@ code {
 .default-button:hover {
   background-color: var(--blue-dark-color);
 }
+
+.red-text {
+  font-weight: bold;
+  color: var(--red-color);
+}

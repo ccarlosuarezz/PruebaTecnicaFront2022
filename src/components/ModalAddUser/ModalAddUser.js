@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import closeIcon from "../../Assets/close.svg"
 
-export default function ModalAdd({state, title, butonText, buttonFunction, closeFunction}) {
+export default function ModalAddUser({state, title, butonText, buttonFunction, closeFunction}) {
+
+    const [stateName, setstateName] = useState('');
+    const [stateNickname, setstateNickname] = useState('');
+    const [stateEmail, setstateEmail] = useState('');
+
     return (
         <> 
             {state &&
@@ -15,6 +20,17 @@ export default function ModalAdd({state, title, butonText, buttonFunction, close
                                 <input
                                     className='input-text'
                                     type={'text'}
+                                    value={stateName}
+                                    onChange={(e) => {setstateName(e.target.value)}}
+                                />
+                            </div>
+                            <div className='flex-col'>
+                                <p>Nickname</p>
+                                <input
+                                    className='input-text'
+                                    type={'text'}
+                                    value={stateNickname}
+                                    onChange={(e) => {setstateNickname(e.target.value)}}
                                 />
                             </div>
                             <div className='flex-col'>
@@ -22,6 +38,8 @@ export default function ModalAdd({state, title, butonText, buttonFunction, close
                                 <input
                                     className='input-text'
                                     type={'text'}
+                                    value={stateEmail}
+                                    onChange={(e) => {setstateEmail(e.target.value)}}
                                 />
                             </div>
                         </div>

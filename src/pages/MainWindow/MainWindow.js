@@ -1,49 +1,29 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import ElementCard from '../../components/ElementCard/ElementCard';
-import Loader from '../../components/Loader/Loader';
-import ModalAdd from '../../components/ModalAdd/ModalAdd';
+import React from 'react';
+import { UserCircleIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom';
 
 export default function MainWindow() {
 
-    const [stateElements, setstateElements] = useState([]);
-    const [stateModalAdd, setstateModalAdd] = useState(false);
-    const [stateLoader, setstateLoader] = useState(false);
+  const navigate = useNavigate()
 
     return (
         <div className='padding-2'>
-          <div className='flex-col'>
+          <div className='flex-row gap-x-2'>
             <button
               className='flex-row gap-x-1 button bg-blue button-hover-blue'
-              onClick={() => {setstateModalAdd(!stateModalAdd)}}
+              onClick={() => {navigate("/users")}}
             >
-              <PlusCircleIcon width={30} className='icon'/>
-              <p>Nuevo</p>
+              <UserCircleIcon width={30} className='icon'/>
+              <p>Usuarios</p>
+            </button>
+            <button
+              className='flex-row gap-x-1 button bg-blue button-hover-blue'
+              onClick={() => {navigate("/places")}}
+            >
+              <MapPinIcon width={30} className='icon'/>
+              <p>Sitios de interés</p>
             </button>
           </div>
-          <div className='flex-col padding-2 gap-y-2'>
-            {Array.from({length: 4}).map((el, index) => (
-              <ElementCard
-                key={index}
-                elementToShow={{name: 'Carlos Suárez', email: 'carlosuarez27@outlook.com'}}
-              />
-            ))
-            }
-            {stateElements.length > 0 &&
-              <div>
-
-              </div>
-            }
-          </div>
-          <Loader state={stateLoader}/>
-          <ModalAdd
-            state={stateModalAdd}
-            title={'Agregar elemento'}
-            butonText={'Agregar'}
-            buttonFunction={() => {console.log('add')}}
-            closeFunction={() => {setstateModalAdd(!stateModalAdd)}}
-          />
         </div>
     )
 }
