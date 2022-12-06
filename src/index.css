@@ -126,3 +126,15 @@ code {
   font-weight: bold;
   color: var(--red-color);
 }
+
+.text-green {
+  color: var(--green-color);
+}
+
+.text-yellow {
+  color: var(--yellow-color);
+}
+
+.text-red {
+  color: var(--red-color);
+}

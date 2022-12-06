@@ -1,11 +1,33 @@
 import React, { useState } from 'react'
 import closeIcon from "../../Assets/close.svg"
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 export default function ModalAddUser({state, title, butonText, buttonFunction, closeFunction}) {
 
     const [stateName, setstateName] = useState('');
     const [stateNickname, setstateNickname] = useState('');
     const [stateEmail, setstateEmail] = useState('');
+    const [stateWarningData, setstateWarningData] = useState(false);
+
+    const cleanFields = () => {
+        setstateName('')
+        setstateNickname('')
+        setstateEmail('')
+    }
+
+    const addUser = () => {
+        if (stateName === '' || stateNickname === '' || stateEmail === '') {
+            setstateWarningData(!stateWarningData)
+        } else {
+            const newUser = {
+                name: stateName,
+                nickname: stateNickname,
+                email: stateEmail
+            }
+            buttonFunction(newUser)
+            cleanFields()
+        }
+    }
 
     return (
         <> 
@@ -45,13 +67,19 @@ export default function ModalAddUser({state, title, butonText, buttonFunction, c
                         </div>
                         <button
                             className='default-button button-hover-blue'
-                            onClick={() => {buttonFunction()}}
+                            onClick={() => {addUser()}}
                         >
                             {butonText}
                         </button>
                     </div>
                 </div>
             }
+            <ModalMessage
+                state={stateWarningData}
+                messageType={'warning'}
+                text={'Hacen falta datos'}
+                closeFunction={() => {setstateWarningData(!stateWarningData)}}
+            />
         </>
     )
 }

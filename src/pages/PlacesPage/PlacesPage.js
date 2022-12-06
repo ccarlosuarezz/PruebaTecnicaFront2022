@@ -1,16 +1,56 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import Loader from '../../components/Loader/Loader';
 import ModalAddPlace from '../../components/ModalAddPlace/ModalAddPlace';
 import PlaceCard from '../../components/PlaceCard/PlaceCard';
+import { createPlace, getAllPlaces } from '../../services/PlaceService';
+import ModalMessage from '../../components/ModalMessage/ModalMessage';
 
 export default function PlacesPage() {
 
     const [statePlaces, setstatePlaces] = useState([]);
     const [stateModalAdd, setstateModalAdd] = useState(false);
     const [stateLoader, setstateLoader] = useState(false);
+    const [stateErrorAdd, setstateErrorAdd] = useState(false);
+    const [stateErrorGet, setstateErrorGet] = useState(false);
 
+    useEffect(() => {
+      updatePlaces()
+    }, []);
+
+    const addPlace = (newPlace) => {
+      setstateLoader(true)
+      createPlace(newPlace)
+      .then(res => {
+        console.log(res)
+        setstateModalAdd(!stateModalAdd)
+        updatePlaces()
+        setstateLoader(false)
+      })
+      .catch(err => {
+        setstateLoader(false)
+        console.log(err)
+        setstateErrorAdd(!stateErrorAdd)
+      })
+    }
+
+    const updatePlaces = () => {
+      setstateLoader(true)
+      getAllPlaces()
+      .then(res => {
+        setstateLoader(false)
+        console.log(res)
+        if (res.data.ok) {
+          setstatePlaces(res.data.data)
+        }
+      })
+      .catch(err => {
+        setstateLoader(false)
+        console.log(err)
+        setstateErrorGet(!stateErrorGet)
+      })
+    }
     return (
         <div className='padding-2'>
           <div className='flex-col'>
@@ -23,10 +63,10 @@ export default function PlacesPage() {
             </button>
           </div>
           <div className='flex-col padding-2 gap-y-2'>
-            {Array.from({length: 4}).map((el, index) => (
+            {statePlaces.length > 0 && statePlaces.map((place, index) => (
               <PlaceCard
                 key={index}
-                elementToShow={{name: 'Unicentro', description: 'Centro comercial', location: 'Av Universitaria #39 - 77'}}
+                elementToShow={place}
               />
             ))
             }
@@ -39,8 +79,20 @@ export default function PlacesPage() {
             state={stateModalAdd}
             title={'Agregar sitio'}
             butonText={'Agregar'}
-            buttonFunction={() => {console.log('add')}}
+            buttonFunction={(newPlace) => {addPlace(newPlace)}}
             closeFunction={() => {setstateModalAdd(!stateModalAdd)}}
+          />
+          <ModalMessage
+            state={stateErrorAdd}
+            messageType={'error'}
+            text={'Error al agregar sitio'}
+            closeFunction={() => {setstateErrorAdd(!stateErrorAdd)}}
+          />
+          <ModalMessage
+            state={stateErrorGet}
+            messageType={'error'}
+            text={'Error al obtener sitios'}
+            closeFunction={() => {setstateErrorGet(!stateErrorGet)}}
           />
         </div>
     )

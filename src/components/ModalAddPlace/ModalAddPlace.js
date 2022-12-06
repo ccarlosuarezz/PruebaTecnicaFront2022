@@ -1,11 +1,33 @@
 import React, { useState } from 'react'
 import closeIcon from "../../Assets/close.svg"
+import ModalMessage from '../ModalMessage/ModalMessage';
 
 export default function ModalAddPlace({state, title, butonText, buttonFunction, closeFunction}) {
 
     const [stateName, setstateName] = useState('');
     const [stateDescription, setstateDescription] = useState('');
     const [stateLocation, setstateLocation] = useState('');
+    const [stateWarningData, setstateWarningData] = useState(false);
+
+    const cleanFields = () => {
+        setstateName('')
+        setstateDescription('')
+        setstateLocation('')
+    }
+
+    const addPlace = () => {
+        if (stateName === '' || stateDescription === '' || stateLocation === '') {
+            setstateWarningData(!stateWarningData)
+        } else {
+            const newPlace = {
+                name: stateName,
+                description: stateDescription,
+                location: stateLocation
+            }
+            buttonFunction(newPlace)
+            cleanFields()
+        }
+    }
 
     return (
         <> 
@@ -44,13 +66,19 @@ export default function ModalAddPlace({state, title, butonText, buttonFunction, 
                         </div>
                         <button
                             className='default-button button-hover-blue'
-                            onClick={() => {buttonFunction()}}
+                            onClick={() => {addPlace()}}
                         >
                             {butonText}
                         </button>
                     </div>
                 </div>
             }
+            <ModalMessage
+                state={stateWarningData}
+                messageType={'warning'}
+                text={'Hacen falta datos'}
+                closeFunction={() => {setstateWarningData(!stateWarningData)}}
+            />
         </>
     )
 }
