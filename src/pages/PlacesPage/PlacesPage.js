@@ -51,6 +51,7 @@ export default function PlacesPage() {
         setstateErrorGet(!stateErrorGet)
       })
     }
+    
     return (
         <div className='padding-2'>
           <div className='flex-col'>
